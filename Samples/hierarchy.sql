@@ -1,3 +1,15 @@
+--Простой пример употребления фразы WITH для построения рекурсивного запроса
+WITH
+numbers ( n ) AS (
+   SELECT 1 AS n FROM dual -- исходное множество -- одна строка
+   UNION ALL                      -- символическое «объединение» строк
+   SELECT n + 1 AS n              -- рекурсия: добавок к предыдущему результату
+   FROM   numbers                 -- предыдущий результат в качестве источника данных
+   WHERE  n < 5                   -- если не ограничить, будет бесконечная рекурсия
+)
+SELECT n FROM numbers             -- основной запрос
+;
+
 WITH stepbystep(n,id,parent_id,name) AS
  (SELECT 1 n, g.id, g.master_id, g.name way
     FROM goods g
